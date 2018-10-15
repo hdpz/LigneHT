@@ -7,7 +7,7 @@ from skimage import feature
 
 # Generate noisy image of a square
 im = np.zeros((128, 128))
-im[32:-32, 32:-32] = 1 #jb
+im[32:-32, 32:-32] = 1  # jb
 
 im = ndi.rotate(im, 15, mode='constant')
 im = ndi.gaussian_filter(im, 4)
@@ -36,4 +36,3 @@ ax3.set_title('Canny filter, $\sigma=3$', fontsize=20)
 fig.tight_layout()
 
 plt.show()
-
