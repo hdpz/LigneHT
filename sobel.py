@@ -58,20 +58,23 @@ def trouveryMax(mat):
 
 
 def density(mat):
+    '''calcule le nombre de points lumineux par ligne'''
     X, Y = listing(mat)
-    a = [ Y.count(i) for i in range(len(Y))]
-    return(a)
+    counter = [Y.count(i) for i in range(len(Y))]
+    return(counter)
 
 
-def pics(a):
+def pics(counter):
+    '''filtre les lignes avec un trop faible nombre de points'''
     ind = []
     seuil = np.mean(a)+np.std(a)
     for i in range(len(a)):
-        if a[i] < seuil :
+        if a[i] < seuil:
             a[i] = 0
-        else : 
+        else:
             ind.append(i)
     return(a, ind)
+
 
 def mesure_hauteur(mat):
     a = density(mat)
@@ -85,21 +88,23 @@ def mesure_hauteur(mat):
     MAX = max(b)
     print(MAX-MIN)
     return(MAX-MIN)
-    
+
+
 def hauteur_fil(haut_ref_pix, haut_ref_real, haut_fil_pix):
     return((haut_ref_real*haut_fil_pix)/haut_ref_pix)
+
 
 if __name__ == '__main__':
 
     img = io.imread('Images/face_fil.jpg', as_gray=True)
     edge_sobel = sobel(img)
 
-    contraste = augmentContrast(edge_sobel, 0.1)   
-    
-    
+    contraste = augmentContrast(edge_sobel, 0.1)
+
     rogne1 = rogner(contraste, 1000, 3600,  200, 2400)
     rogne2 = rogner(contraste, 500, contraste.shape[1], 0, contraste.shape[0])
-    rogne3 = rogner(contraste, 500, int((contraste.shape[1]-500)/2), 0, contraste.shape[0]) 
+    rogne3 = rogner(contraste, 500, int(
+        (contraste.shape[1]-500)/2), 0, contraste.shape[0])
     rogne = rogne3
 
     X, Y = listing(rogne)
@@ -109,10 +114,7 @@ if __name__ == '__main__':
     par = np.polyval(z, t)
     MIN = min_parabole(z)
 
-    
-    h =  mesure_hauteur(rogne3)
-
-
+    h = mesure_hauteur(rogne3)
 
     fig, ax = plt.subplots(ncols=2, sharex=True, sharey=True,
                            figsize=(20, 20))
@@ -127,6 +129,5 @@ if __name__ == '__main__':
 
     plt.tight_layout()
     plt.show()
-    
-    print('Hauteur sous fil : '+str(hauteur_fil(h, 199.5, MIN[1])))
 
+    print('Hauteur sous fil : '+str(hauteur_fil(h, 199.5, MIN[1])))
