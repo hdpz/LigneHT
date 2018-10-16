@@ -6,6 +6,8 @@ from skimage.data import camera
 from skimage.filters import roberts, sobel, scharr, prewitt, laplace
 from skimage import io, feature
 
+from sobel import augmentContrast
+
 
 def computeModels(img):
     '''Calcule les resultats des differentes methodes de detection d'objets'''
@@ -19,7 +21,15 @@ def computeModels(img):
     return results
 
 
-def displayImages(results):
+def ameliorerLesImages(results):
+    '''Augmente le contraste des images'''
+    for titre in results:
+        if titre != 'Image original':
+            results[titre] = augmentContrast(results[titre], 0.1)
+    return results
+
+
+def displayScoring(results):
     '''arrange les resultats dans une matrice pour que ce soit tout beau'''
     fig, plots = plt.subplots(nrows=3, ncols=3, figsize=(10, 15),
                               sharex=True, sharey=True)
@@ -43,10 +53,19 @@ def displayImages(results):
     plots[0, 2].axis('off')
 
     plt.tight_layout()
-    plt.show()
+
+
+def displayBig(img, titre):
+    fig, plot = plt.subplots()
+    plot.imshow(img, cmap=plt.cm.gray)
+    plot.set_title(titre, fontsize=20)
+    plot.axis('off')
 
 
 if __name__ == '__main__':
     IMG = io.imread('Images/face_fil.jpg', as_gray=True)
     results = computeModels(IMG)
-    displayImages(results)
+    results = ameliorerLesImages(results)
+    displayBig(results['Sobel'], 'Sobel')
+    displayScoring(results)
+    plt.show()
