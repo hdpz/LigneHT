@@ -8,6 +8,7 @@ from skimage import io, feature
 
 
 def computeModels(img):
+    '''Calcule les resultats des differentes methodes de detection d'objets'''
     results = {'Image original': IMG}
     results['Canny'] = feature.canny(img, sigma=1)
     results['Roberts'] = roberts(img)
@@ -19,7 +20,7 @@ def computeModels(img):
 
 
 def displayImages(results):
-
+    '''arrange les resultats dans une matrice pour que ce soit tout beau'''
     fig, plots = plt.subplots(nrows=3, ncols=3, figsize=(10, 15),
                               sharex=True, sharey=True)
 

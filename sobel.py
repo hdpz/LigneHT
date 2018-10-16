@@ -25,23 +25,26 @@ def rogner(mat, xMin, xMax, yMin, yMax):
 
 
 def listing(mat):
+    '''extrait les listes de coordonnees des points d'interfaces'''
     X = []
     Y = []
     for y in range(mat.shape[0]):
         for x in range(mat.shape[1]):
-            if mat[y][x] == 1 :
+            if mat[y][x] == 1:
                 X.append(x)
                 Y.append(y)
     return(X, Y)
 
+
 def fitting_parabole(X, Y):
+    '''fit un polynome sur les listes de coordonnees'''
     z = np.polyfit(X, Y, 2)
     return(z)
 
+
 def min_parabole(z):
+    '''calcule le min du polynome'''
     return(-z[1]/(2*z[0]), np.polyval(z, [-z[1]/(2*z[0])])[0])
-    
-    
 
 
 def trouveryMax(mat):
@@ -87,9 +90,10 @@ def hauteur_fil(haut_ref_pix, haut_ref_real, haut_fil_pix):
     return((haut_ref_real*haut_fil_pix)/haut_ref_pix)
 
 if __name__ == '__main__':
-    
+
     img = io.imread('Images/face_fil.jpg', as_gray=True)
     edge_sobel = sobel(img)
+
     contraste = augmentContrast(edge_sobel, 0.1)   
     
     
@@ -97,14 +101,17 @@ if __name__ == '__main__':
     rogne2 = rogner(contraste, 500, contraste.shape[1], 0, contraste.shape[0])
     rogne3 = rogner(contraste, 500, int((contraste.shape[1]-500)/2), 0, contraste.shape[0]) 
     rogne = rogne3
+
     X, Y = listing(rogne)
     z = fitting_parabole(X, Y)
-    
+
     t = np.linspace(0, rogne.shape[1])
     par = np.polyval(z, t)
     MIN = min_parabole(z)
+
     
     h =  mesure_hauteur(rogne3)
+
 
 
     fig, ax = plt.subplots(ncols=2, sharex=True, sharey=True,
@@ -112,13 +119,9 @@ if __name__ == '__main__':
 
     ax[0].imshow(rogne, cmap=plt.cm.gray)
     ax[0].plot(t, par)
-    ax[0].plot(MIN[0], MIN[1], '+r', linewidth = 3)
+    ax[0].plot(MIN[0], MIN[1], '+r', linewidth=3)
     ax[0].set_title('Sobel Edge Detection')
 
-
-
-    ax[0].imshow(rogne, cmap=plt.cm.gray)
-    ax[0].set_title('Sobel Edge Detection')
     for a in ax:
         a.axis('off')
 
