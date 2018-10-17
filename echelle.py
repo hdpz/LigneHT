@@ -4,14 +4,13 @@ from skimage import io
 import pylab as plt
 
 
+RAYON_BOUCHON = 2
+
+
 def pixelOrange(pix):
     '''Renvoies true si la couleur du pixel est proche du orange'''
     red, green, blue = pix[0], pix[1], pix[2]
-<<<<<<< HEAD
-    if red > 130 and blue < 100 and green < 100 :
-=======
     if red > 130 and blue < 100 and green < 100:
->>>>>>> 9cafa6b74ec40aa26af9a60298afbbb9327c3197
         return True
     return False
 
@@ -39,27 +38,38 @@ def listePixOrange(img):
 
 
 def centreEtRayons(X, Y):
+    '''calcule le centre du cercle et les rayons de chacun des points a ce cercle'''
     centreX = np.mean(X)
     centreY = np.mean(Y)
     rayons = []
     for i in range(len(X)):
-
         rayon = np.sqrt((X[i]-centreX)**2+(Y[i]-centreY)**2)
         rayons.append(rayon)
     return rayons, centreX, centreY
 
 
 def calculeCercle(X, Y):
+    '''calcule iterativement le cercle du bouchon et ses coordonnees en eliminant les points extremes'''
     rayons, centreX, centreY = centreEtRayons(X, Y)
     # nouvelle iteration pour eliminer les points trop loins
+    indexAEnlever = []
     for i in range(len(rayons)):
         seuil = np.mean(rayons)+2*np.std(rayons)
         if rayons[i] > seuil:
-            X.pop(i)
-            Y.pop(i)
-            print('jai pope')
+            indexAEnlever.append(i)
+    X = [X[i]for i in range(len(X)) if i not in indexAEnlever]
+    Y = [Y[i]for i in range(len(Y)) if i not in indexAEnlever]
     rayons, centreX, centreY = centreEtRayons(X, Y)
     return(np.max(rayons), centreX, centreY)
+
+
+def echelleAPartirDuBouchon(img):
+    '''calcule l'echelle de l'image ainsi que le centre du bouchon'''
+    X, Y = listePixOrange(img)
+    R, centreX, centreY = calculeCercle(X, Y)
+    echelle = RAYON_BOUCHON / R
+    print('Le rayon du bouchon est', R)
+    return echelle, centreY
 
 
 def afficheImageAvecPixOrange(img):
@@ -78,11 +88,4 @@ def afficheImageAvecPixOrange(img):
 
 if __name__ == '__main__':
     img = io.imread('Images/face_bouchon.jpg')
-    # print(pixelOrange([222, 100, 50]))
-    # comptePixOrange(img)
     X, Y = afficheImageAvecPixOrange(img)
-<<<<<<< HEAD
-    print(rayonCercle(X, Y))
-=======
-    # print(rayonCercle(X, Y))
->>>>>>> 9cafa6b74ec40aa26af9a60298afbbb9327c3197
