@@ -6,7 +6,7 @@ from skimage import io
 def pixelOrange(pix):
     '''Renvoies true si la couleur du pixel est proche du orange'''
     red, green, blue = pix[0], pix[1], pix[2]
-    if red > 200:
+    if red > 130:
         return True
     return False
 
