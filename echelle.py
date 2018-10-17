@@ -42,7 +42,6 @@ def centreEtRayons(X, Y):
     centreY = np.mean(Y)
     rayons = []
     for i in range(len(X)):
-
         rayon = np.sqrt((X[i]-centreX)**2+(Y[i]-centreY)**2)
         rayons.append(rayon)
     return rayons, centreX, centreY
@@ -51,12 +50,14 @@ def centreEtRayons(X, Y):
 def calculeCercle(X, Y):
     rayons, centreX, centreY = centreEtRayons(X, Y)
     # nouvelle iteration pour eliminer les points trop loins
+    indexAEnlever = []
     for i in range(len(rayons)):
         seuil = np.mean(rayons)+2*np.std(rayons)
         if rayons[i] > seuil:
-            X.pop(i)
-            Y.pop(i)
+            indexAEnlever.append(i)
             print('jai pope')
+    X = [X[i]for i in range(len(X)) if i not in indexAEnlever]
+    Y = [Y[i]for i in range(len(Y)) if i not in indexAEnlever]
     rayons, centreX, centreY = centreEtRayons(X, Y)
     return(np.max(rayons), centreX, centreY)
 
