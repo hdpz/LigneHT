@@ -24,6 +24,8 @@ init = np.array([x, y]).T
 snake = active_contour(gaussian(img, 3),
                        init, alpha=0.015, beta=10, gamma=0.001)
 
+print (snake)
+
 fig, ax = plt.subplots(figsize=(7, 7))
 ax.imshow(img, cmap=plt.cm.gray)
 ax.plot(init[:, 0], init[:, 1], '--r', lw=3)
