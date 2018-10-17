@@ -14,7 +14,7 @@ from skimage.filters import gaussian
 from skimage.segmentation import active_contour
 from skimage import io
 
-img = io.imread('Images/bouchon1.jpg')
+img = io.imread('Images/Bouchon3.jpg')
 
 def rayon(x, y, x_C, y_C):
     return(np.sqrt((x-x_C)**2+(y-y_C)**2))
