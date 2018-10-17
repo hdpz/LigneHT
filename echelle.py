@@ -7,7 +7,11 @@ import pylab as plt
 def pixelOrange(pix):
     '''Renvoies true si la couleur du pixel est proche du orange'''
     red, green, blue = pix[0], pix[1], pix[2]
+<<<<<<< HEAD
     if red > 130 and blue < 100 and green < 100 :
+=======
+    if red > 130:
+>>>>>>> 2f909fa187a1e7f6fc7eac65da58906dedc60937
         return True
     return False
 
