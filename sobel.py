@@ -63,9 +63,17 @@ def density(mat):
     return(a)
 
 
+
+
 def pics(a):
+    plt.plot(a)
+    plt.axis([0, 4160, 0, 50])
+    plt.grid()
+    plt.show()
     ind = []
-    seuil = np.mean(a)+np.std(a)
+    tri_a = sorted(a)
+    seuil = tri_a[-100]
+    print(seuil)
     for i in range(len(a)):
         if a[i] < seuil :
             a[i] = 0
@@ -89,12 +97,20 @@ def mesure_hauteur(mat):
 def hauteur_fil(haut_ref_pix, haut_ref_real, haut_fil_pix):
     return((haut_ref_real*haut_fil_pix)/haut_ref_pix)
 
+
+def filtre_passe_bas():
+    
+    np
+    
+
+
+
 if __name__ == '__main__':
 
-    img = io.imread('Images/face_fil.jpg', as_gray=True)
+    img = io.imread('Images/face_cible.jpg', as_gray=True)
     edge_sobel = sobel(img)
 
-    contraste = augmentContrast(edge_sobel, 0.1)   
+    contraste = augmentContrast(edge_sobel, 0.03)   
     
     
     rogne1 = rogner(contraste, 1000, 3600,  200, 2400)
@@ -117,7 +133,7 @@ if __name__ == '__main__':
     fig, ax = plt.subplots(ncols=2, sharex=True, sharey=True,
                            figsize=(20, 20))
 
-    ax[0].imshow(rogne, cmap=plt.cm.gray)
+    ax[0].imshow(contraste, cmap=plt.cm.gray)
     ax[0].plot(t, par)
     ax[0].plot(MIN[0], MIN[1], '+r', linewidth=3)
     ax[0].set_title('Sobel Edge Detection')

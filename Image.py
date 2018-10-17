@@ -88,6 +88,7 @@ import numpy as np
 from skimage.transform import (hough_line, hough_line_peaks,
                                probabilistic_hough_line)
 from skimage.feature import canny
+from skimage.filters import sobel
 
 
 import matplotlib.pyplot as plt
@@ -96,9 +97,11 @@ from matplotlib import cm
 from skimage import io
 
 # Line finding using the Probabilistic Hough Transform
-image = io.imread("Images/face_fil.jpg", as_gray = True)
-edges = canny(image, 0.5)
-lines = probabilistic_hough_line(edges, threshold=2, line_length=20, line_gap=2)
+image = io.imread("Images/face_fil_2.jpg", as_gray = True)
+edges = canny(image, 0.1)
+#edges = sobel(image)
+print('starting')
+lines = probabilistic_hough_line(edges) #, threshold=1, line_length=1000, line_gap=20)
 
 # Generating figure 2
 fig, axes = plt.subplots(1, 3, figsize=(15, 5), sharex=True, sharey=True)
