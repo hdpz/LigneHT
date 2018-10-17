@@ -14,7 +14,21 @@ from skimage.filters import gaussian
 from skimage.segmentation import active_contour
 from skimage import io
 
-img = io.imread('Images/face_bouchon.jpg', as_gray=True)
+img = io.imread('Images/face_bouchon.jpg')
+
+def rayon(x, y, x_C, y_C):
+    return(np.sqrt((x-x_C)**2+(y-y_C)**2))
+
+
+def rayonCercle(X, Y):
+    x_C = np.mean(X)
+    y_C = np.mean(Y)
+    r = []
+    for i in range(len(X)):
+        r.append(rayon(X[i], Y[i], x_C, y_C ))
+    R = [r[i] for i in range(len(r)) if r[i] < np.mean(r)+3*np.std(r) ]
+    return(np.max(R), x_C, y_C)
+
 
 s = np.linspace(0, 2*np.pi, 400)
 x = 2583 + 100*np.cos(s)
@@ -32,6 +46,18 @@ ax.plot(init[:, 0], init[:, 1], '--r', lw=3)
 ax.plot(snake[:, 0], snake[:, 1], '-b', lw=3)
 ax.set_xticks([]), ax.set_yticks([])
 ax.axis([0, img.shape[1], img.shape[0], 0])
+
+
+snake2 = snake.T
+X = snake2[0]
+Y = snake2[1]
+
+R, xC, yC = rayonCercle(X, Y)
+xc = xC + R*np.cos(s)
+yc = yC + R*np.sin(s)
+
+ax.plot(xc, yc)
+plt.show()
 
 
 
