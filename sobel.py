@@ -24,10 +24,14 @@ def augmentContrast(edgeSobel, seuil, display=False):
     return contraste
 
 
-def rogner(mat, xMin, xMax, yMin, yMax):
+def rogner(mat):
     '''rogne la photo pour n'avoir que la corde pour fitter le polynome'''
+    yMin = int(mat.shape[0]*0.1)
+    yMax = int(mat.shape[0]*0.8)
+    xMin = int(mat.shape[1]*0.2)
+    xMax = int(mat.shape[1]*0.8)
     matRogne = mat[yMin:yMax, xMin:xMax]
-    return matRogne
+    return matRogne, yMin
 
 
 def listing(mat):
@@ -105,7 +109,7 @@ def hauteur_fil(haut_ref_pix, haut_ref_real, haut_fil_pix):
 def calculeHauteur(img, seuilContraste, display=False):
     mat = sobel(img)
     contraste = augmentContrast(mat, seuilContraste)
-    rogne = rogner(contraste, 1000, 3600,  200, 2400)
+    rogne, yRogne = rogner(contraste)
     X, Y = listing(rogne)
     z = fitting_parabole(X, Y)
 
@@ -113,7 +117,7 @@ def calculeHauteur(img, seuilContraste, display=False):
     par = np.polyval(z, t)
     MinRogne = min_parabole(z)[1]
     # on doit compenser le rognagne de l'image
-    MIN = MinRogne + 200
+    MIN = MinRogne + yRogne
 
     if display:
         fig, ax = plt.subplots(ncols=2, sharex=True, sharey=True,
