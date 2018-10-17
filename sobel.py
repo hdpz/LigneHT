@@ -106,15 +106,13 @@ def calculeHauteur(img, seuilContraste, display=False):
     mat = sobel(img)
     contraste = augmentContrast(mat, seuilContraste)
     rogne = rogner(contraste, 1000, 3600,  200, 2400)
-    #rogne2 = rogner(contraste, 500, contraste.shape[1], 0, contraste.shape[0])
-    # rogne3 = rogner(contraste, 500, int(
-    #    (contraste.shape[1]-500)/2), 0, contraste.shape[0])
     X, Y = listing(rogne)
     z = fitting_parabole(X, Y)
 
     t = np.linspace(0, rogne.shape[1])
     par = np.polyval(z, t)
     MinRogne = min_parabole(z)[1]
+    # on doit compenser le rognagne de l'image
     MIN = MinRogne + 200
 
     if display:

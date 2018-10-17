@@ -38,6 +38,7 @@ def listePixOrange(img):
 
 
 def centreEtRayons(X, Y):
+    '''calcule le centre du cercle et les rayons de chacun des points a ce cercle'''
     centreX = np.mean(X)
     centreY = np.mean(Y)
     rayons = []
@@ -48,6 +49,7 @@ def centreEtRayons(X, Y):
 
 
 def calculeCercle(X, Y):
+    '''calcule iterativement le cercle du bouchon et ses coordonnees en eliminant les points extremes'''
     rayons, centreX, centreY = centreEtRayons(X, Y)
     # nouvelle iteration pour eliminer les points trop loins
     indexAEnlever = []
@@ -55,7 +57,6 @@ def calculeCercle(X, Y):
         seuil = np.mean(rayons)+2*np.std(rayons)
         if rayons[i] > seuil:
             indexAEnlever.append(i)
-            print('jai pope')
     X = [X[i]for i in range(len(X)) if i not in indexAEnlever]
     Y = [Y[i]for i in range(len(Y)) if i not in indexAEnlever]
     rayons, centreX, centreY = centreEtRayons(X, Y)
@@ -63,6 +64,7 @@ def calculeCercle(X, Y):
 
 
 def echelleAPartirDuBouchon(img):
+    '''calcule l'echelle de l'image ainsi que le centre du bouchon'''
     X, Y = listePixOrange(img)
     R, centreX, centreY = calculeCercle(X, Y)
     echelle = RAYON_BOUCHON / R
