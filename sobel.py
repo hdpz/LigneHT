@@ -70,8 +70,6 @@ def density(mat):
     return(counter)
 
 
-
-
 def pics(a):
     '''filtre les lignes avec un trop faible nombre de points'''
     ind = []
@@ -104,21 +102,21 @@ def hauteur_fil(haut_ref_pix, haut_ref_real, haut_fil_pix):
     return((haut_ref_real*haut_fil_pix)/haut_ref_pix)
 
 
-def calculeHauteur(mat, seuilContraste, display=False):
-    contraste = augmentContrast(edge_sobel, seuilContraste)
-    rogne1 = rogner(contraste, 1000, 3600,  200, 2400)
-    rogne2 = rogner(contraste, 500, contraste.shape[1], 0, contraste.shape[0])
-    rogne3 = rogner(contraste, 500, int(
-        (contraste.shape[1]-500)/2), 0, contraste.shape[0])
-    rogne = rogne1
+def calculeHauteur(img, seuilContraste, display=False):
+    mat = sobel(img)
+    contraste = augmentContrast(mat, seuilContraste)
+    rogne = rogner(contraste, 1000, 3600,  200, 2400)
+    #rogne2 = rogner(contraste, 500, contraste.shape[1], 0, contraste.shape[0])
+    # rogne3 = rogner(contraste, 500, int(
+    #    (contraste.shape[1]-500)/2), 0, contraste.shape[0])
     X, Y = listing(rogne)
     z = fitting_parabole(X, Y)
 
     t = np.linspace(0, rogne.shape[1])
     par = np.polyval(z, t)
-    MIN = min_parabole(z)
+    MinRogne = min_parabole(z)[1]
+    MIN = MinRogne + 200
 
-    h = mesure_hauteur(rogne3)
     if display:
         fig, ax = plt.subplots(ncols=2, sharex=True, sharey=True,
                                figsize=(20, 20))
@@ -130,11 +128,10 @@ def calculeHauteur(mat, seuilContraste, display=False):
 
         for a in ax:
             a.axis('off')
-
         plt.tight_layout()
         plt.show()
 
-    return hauteur_fil(h, 199.5, MIN[1])
+    return MIN
 
 
 def trouverSeuilContrasteOptimal(edgeSobel, hauteurDuFil):
@@ -155,5 +152,4 @@ if __name__ == '__main__':
     img = io.imread('Images/face_fil.jpg', as_gray=True)
     edge_sobel = sobel(img)
 
-    #calculeHauteur(edge_sobel, 0.1, True)
     trouverSeuilContrasteOptimal(edge_sobel, 112)

@@ -4,6 +4,9 @@ from skimage import io
 import pylab as plt
 
 
+RAYON_BOUCHON = 2
+
+
 def pixelOrange(pix):
     '''Renvoies true si la couleur du pixel est proche du orange'''
     red, green, blue = pix[0], pix[1], pix[2]
@@ -58,6 +61,14 @@ def calculeCercle(X, Y):
     return(np.max(rayons), centreX, centreY)
 
 
+def echelleAPartirDuBouchon(img):
+    X, Y = listePixOrange(img)
+    R, centreX, centreY = calculeCercle(X, Y)
+    echelle = RAYON_BOUCHON / R
+    print('Le rayon du bouchon est', R)
+    return echelle, centreY
+
+
 def afficheImageAvecPixOrange(img):
     ''' Affiche les pixels oranges sur l'image d'origine '''
     X, Y = listePixOrange(img)
@@ -74,7 +85,4 @@ def afficheImageAvecPixOrange(img):
 
 if __name__ == '__main__':
     img = io.imread('Images/face_bouchon.jpg')
-    # print(pixelOrange([222, 100, 50]))
-    # comptePixOrange(img)
     X, Y = afficheImageAvecPixOrange(img)
-    # print(rayonCercle(X, Y))
