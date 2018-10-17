@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from copy import deepcopy
 
 from skimage.data import camera
-from skimage.filters import roberts, sobel, scharr, prewitt, laplace, sobel_v
+from skimage.filters import roberts, sobel, sobel_v
 from skimage import io
 
 
@@ -106,7 +106,7 @@ def calculeHauteur(mat, seuilContraste, display=False):
     rogne2 = rogner(contraste, 500, contraste.shape[1], 0, contraste.shape[0])
     rogne3 = rogner(contraste, 500, int(
         (contraste.shape[1]-500)/2), 0, contraste.shape[0])
-    rogne = rogne3
+    rogne = rogne1
     X, Y = listing(rogne)
     z = fitting_parabole(X, Y)
 
@@ -135,7 +135,7 @@ def calculeHauteur(mat, seuilContraste, display=False):
 
 def trouverSeuilContrasteOptimal(edgeSobel, hauteurDuFil):
     meilleurSeuil, plusPetitEcart = 0, 100
-    valeurDeSeuils = np.linspace(0.05, 0.1, 10)
+    valeurDeSeuils = np.linspace(0.05, 0.2, 10)
     for seuilContraste in valeurDeSeuils:
         hauteurCalculee = calculeHauteur(edgeSobel, seuilContraste)
         ecart = hauteurDuFil-hauteurCalculee
@@ -148,9 +148,8 @@ def trouverSeuilContrasteOptimal(edgeSobel, hauteurDuFil):
 
 if __name__ == '__main__':
 
-    img = io.imread('Images/face_fil_3.jpg', as_gray=True)
+    img = io.imread('Images/face_fil.jpg', as_gray=True)
     edge_sobel = sobel(img)
 
-    # augmentContrast(edge_sobel, 0.1, True)
-
+    #calculeHauteur(edge_sobel, 0.1, True)
     trouverSeuilContrasteOptimal(edge_sobel, 112)
