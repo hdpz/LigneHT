@@ -8,8 +8,8 @@ from sobel import calculeHauteur
 HAUTEUR_BOUCHON = 29
 
 if __name__ == '__main__':
-    imgGris = io.imread('Images/Bouchon3.jpg', as_gray=True)
-    imgCouleur = io.imread('Images/Bouchon3.jpg')
+    imgGris = io.imread('Images/bouchon2.jpg', as_gray=True)
+    imgCouleur = io.imread('Images/bouchon2.jpg')
 
     echelle, centreY = echelleAPartirDuBouchon(imgCouleur)
     print('echelle de', echelle)

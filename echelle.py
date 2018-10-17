@@ -10,7 +10,7 @@ RAYON_BOUCHON = 2
 def pixelOrange(pix):
     '''Renvoies true si la couleur du pixel est proche du orange'''
     red, green, blue = pix[0], pix[1], pix[2]
-    if red > 130 and blue < 100 and green < 100:
+    if red > 120 and blue < 100 and green < 50:
         return True
     return False
 
@@ -76,6 +76,7 @@ def afficheImageAvecPixOrange(img):
     ''' Affiche les pixels oranges sur l'image d'origine '''
     X, Y = listePixOrange(img)
     R, x_C, y_C = calculeCercle(X, Y)
+    print(R)
     t = np.linspace(0, 2*np.pi, 400)
     x = R*np.cos(t)+x_C
     y = R*np.sin(t)+y_C
@@ -87,5 +88,6 @@ def afficheImageAvecPixOrange(img):
 
 
 if __name__ == '__main__':
-    img = io.imread('Images/face_bouchon.jpg')
+    img = io.imread('Images/bouchon2.jpg')
+    # comptePixOrange(img)
     X, Y = afficheImageAvecPixOrange(img)
