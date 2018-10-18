@@ -78,8 +78,7 @@ def pics(a):
     '''filtre les lignes avec un trop faible nombre de points'''
     ind = []
     tri_a = sorted(a)
-    seuil = tri_a[-100]
-    print(seuil)
+    seuil = tri_a[0]
     for i in range(len(a)):
         if a[i] < seuil:
             a[i] = 0
@@ -117,6 +116,7 @@ def calculeHauteur(img, seuilContraste, display=True):
     par = np.polyval(z, t)
     MinRogne = min_parabole(z)[1]
     # on doit compenser le rognagne de l'image
+    mesure_hauteur(contraste, display = True)
     MIN = MinRogne + yRogne
 
     if display:
@@ -152,6 +152,7 @@ def trouverSeuilContrasteOptimal(edgeSobel, hauteurDuFil):
 if __name__ == '__main__':
 
     img = io.imread('Images/face_fil.jpg', as_gray=True)
-    edge_sobel = sobel(img)
+    #edge_sobel = sobel(img)
+    calculeHauteur(img, 0.1)
+    #trouverSeuilContrasteOptimal(edge_sobel, 112)
 
-    trouverSeuilContrasteOptimal(edge_sobel, 112)
