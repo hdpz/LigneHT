@@ -5,7 +5,7 @@ import pylab as plt
 
 
 RAYON_BOUCHON = 2
-DISTANCE_CERCLES = 140
+DISTANCE_CERCLES = 134
 
 
 def pixelOrange(pix):
@@ -84,7 +84,6 @@ def echelleAPartirDuBouchon(img):
     X, Y = listePix(img, 'orange')
     R, centreX, centreY = calculeCercle(X, Y)
     echelle = RAYON_BOUCHON / R
-    print('Le rayon du bouchon est', R)
     return echelle, centreY
 
 
@@ -111,10 +110,10 @@ def echelleAPartirDessins(img, display=False):
     X, Y = listePix(partieDroite, 'rouge')
     R, centreXDroite, centreYDroite = calculeCercle(X, Y)
     # compense la division de limage en deux
-    centreXDroite = centreXDroite + img.shape[1]
+    centreXDroite = centreXDroite + img.shape[1]/2
     distanceEntreCercles = np.sqrt(
         (centreXDroite-centreXGauche)**2+(centreYDroite-centreYGauche)**2)
-    echelle = distanceEntreCercles / DISTANCE_CERCLES
+    echelle = DISTANCE_CERCLES/distanceEntreCercles
     return echelle, centreYGauche
 
 

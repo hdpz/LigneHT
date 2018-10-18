@@ -27,8 +27,8 @@ def augmentContrast(edgeSobel, seuil, display=False):
 def rogner(mat):
     '''rogne la photo pour n'avoir que la corde pour fitter le polynome'''
     yMin = int(mat.shape[0]*0.1)
-    yMax = int(mat.shape[0]*0.8)
-    xMin = int(mat.shape[1]*0.2)
+    yMax = int(mat.shape[0]*0.6)
+    xMin = int(mat.shape[1]*0.3)
     xMax = int(mat.shape[1]*0.8)
     matRogne = mat[yMin:yMax, xMin:xMax]
     return matRogne, yMin
@@ -114,18 +114,18 @@ def calculeHauteur(img, seuilContraste, display=True):
 
     t = np.linspace(0, rogne.shape[1])
     par = np.polyval(z, t)
-    MinRogne = min_parabole(z)[1]
+    MinRogne = min_parabole(z)
     # on doit compenser le rognagne de l'image
-    mesure_hauteur(contraste, display = True)
-    MIN = MinRogne + yRogne
+    mesure_hauteur(contraste, display=display)
+    MIN = MinRogne[1] + yRogne
 
     if display:
         fig, ax = plt.subplots(ncols=2, sharex=True, sharey=True,
                                figsize=(20, 20))
 
         ax[0].imshow(rogne, cmap=plt.cm.gray)
-        ax[0].plot(t, par)
-        ax[0].plot(MIN[0], MIN[1], '+r', linewidth=3)
+        #ax[0].plot(t, par)
+        #ax[0].plot(MinRogne[0], MinRogne[1], '+r', linewidth=3)
         ax[0].set_title('Sobel Edge Detection')
 
         for a in ax:
@@ -152,7 +152,8 @@ def trouverSeuilContrasteOptimal(edgeSobel, hauteurDuFil):
 if __name__ == '__main__':
 
     img = io.imread('Images/face_fil.jpg', as_gray=True)
-    #edge_sobel = sobel(img)
-    calculeHauteur(img, 0.1)
-    #trouverSeuilContrasteOptimal(edge_sobel, 112)
-
+    mat = sobel(img)
+    mat = augmentContrast(mat, 0.1)
+    rogne = rogner(mat)
+    plt.imshow(rogne, cmap=plt.cm.gray)
+    plt.show()
