@@ -5,21 +5,21 @@ import pylab as plt
 
 
 RAYON_BOUCHON = 2
-DISTANCE_CERCLES = 134
+DISTANCE_CERCLES = 294
 
 
 def pixelOrange(pix):
     '''Renvoies true si la couleur du pixel est proche du orange'''
     red, green, blue = pix[0], pix[1], pix[2]
-    if red > 120 and blue < 100 and green < 80:
+    if red > 80 and blue < 100 and green < 80:
         return True
     return False
 
 
 def pixelRouge(pix):
-    '''Renvoies true si la couleur du pixel est proche du orange'''
+    '''Renvoies true si la couleur du pixel est proche du rouge'''
     red, green, blue = pix[0], pix[1], pix[2]
-    if red > 100 and blue < 100 and green < 50:
+    if red > 80 and blue < 70 and green < 50:
         return True
     return False
 

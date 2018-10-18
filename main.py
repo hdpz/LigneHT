@@ -6,7 +6,7 @@ from echelle import echelleAPartirDuBouchon, echelleAPartirDessins
 from sobel import calculeHauteur
 
 HAUTEUR_BOUCHON = 29
-HAUTEUR_CERCLE_GAUCHE = 75
+HAUTEUR_CERCLE_GAUCHE = 39
 
 
 if __name__ == '__main__':
@@ -16,7 +16,7 @@ if __name__ == '__main__':
     echelle, centreY = echelleAPartirDessins(imgCouleur)
     print('echelle de', echelle)
 
-    hauteurFil = calculeHauteur(imgGris, 0.08, display=True)
+    hauteurFil = calculeHauteur(imgGris, 0.2, display=True)
     print(hauteurFil)
     hauteurReelle = (centreY-hauteurFil)*echelle + HAUTEUR_CERCLE_GAUCHE
     print('hauteur reelle de', hauteurReelle)
