@@ -10,8 +10,8 @@ HAUTEUR_CERCLE_GAUCHE = 75
 
 
 if __name__ == '__main__':
-    imgGris = io.imread('Images/face_cercles_160.jpg', as_gray=True)
-    imgCouleur = io.imread('Images/face_cercles_160.jpg')
+    imgGris = io.imread('Images/dehors.jpg', as_gray=True)
+    imgCouleur = io.imread('Images/dehors.jpg')
 
     echelle, centreY = echelleAPartirDessins(imgCouleur)
     print('echelle de', echelle)
