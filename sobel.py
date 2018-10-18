@@ -106,7 +106,7 @@ def hauteur_fil(haut_ref_pix, haut_ref_real, haut_fil_pix):
     return((haut_ref_real*haut_fil_pix)/haut_ref_pix)
 
 
-def calculeHauteur(img, seuilContraste, display=False):
+def calculeHauteur(img, seuilContraste, display=True):
     mat = sobel(img)
     contraste = augmentContrast(mat, seuilContraste)
     rogne, yRogne = rogner(contraste)
