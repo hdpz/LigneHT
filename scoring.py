@@ -11,7 +11,8 @@ from sobel import augmentContrast
 
 def computeModels(img):
     '''Calcule les resultats des differentes methodes de detection d'objets'''
-    results = {'Image original': IMG}
+    #results = {'Image original': ing}
+    results = {}
     results['Canny'] = feature.canny(img, sigma=1)
     results['Roberts'] = roberts(img)
     results['Sobel'] = sobel(img)

@@ -4,10 +4,6 @@ from skimage import io
 import pylab as plt
 
 
-RAYON_BOUCHON = 2
-DISTANCE_CERCLES = 294
-
-
 def pixelOrange(pix):
     '''Renvoies true si la couleur du pixel est proche du orange'''
     red, green, blue = pix[0], pix[1], pix[2]
@@ -94,7 +90,7 @@ def diviserImgEnDeux(img):
     return partieGauche, partieDroite
 
 
-def echelleAPartirDessins(img, display=False):
+def echelleAPartirDessins(img, dCercles, display=False):
     '''calcule l'echelle de l'image ainsi que le centre vertical du cercle gauche'''
     partieGauche, partieDroite = diviserImgEnDeux(img)
     X, Y = listePix(partieGauche, 'rouge')
@@ -113,7 +109,7 @@ def echelleAPartirDessins(img, display=False):
     centreXDroite = centreXDroite + img.shape[1]/2
     distanceEntreCercles = np.sqrt(
         (centreXDroite-centreXGauche)**2+(centreYDroite-centreYGauche)**2)
-    echelle = DISTANCE_CERCLES/distanceEntreCercles
+    echelle = dCercles/distanceEntreCercles
     return echelle, centreYGauche
 
 

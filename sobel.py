@@ -27,7 +27,7 @@ def augmentContrast(edgeSobel, seuil, display=False):
 def rogner(mat):
     '''rogne la photo pour n'avoir que la corde pour fitter le polynome'''
     yMin = int(mat.shape[0]*0.1)
-    yMax = int(mat.shape[0]*0.4)
+    yMax = int(mat.shape[0]*0.5)
     xMin = int(mat.shape[1]*0.3)
     xMax = int(mat.shape[1]*0.8)
     matRogne = mat[yMin:yMax, xMin:xMax]
@@ -105,8 +105,7 @@ def hauteur_fil(haut_ref_pix, haut_ref_real, haut_fil_pix):
     return((haut_ref_real*haut_fil_pix)/haut_ref_pix)
 
 
-def calculeHauteur(img, seuilContraste, display=True):
-    mat = sobel(img)
+def calculeHauteur(mat, seuilContraste, display=True):
     contraste = augmentContrast(mat, seuilContraste)
     rogne, yRogne = rogner(contraste)
     X, Y = listing(rogne)
