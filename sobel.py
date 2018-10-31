@@ -117,7 +117,7 @@ def calculeHauteur(mat, seuilContraste, display=True):
     par = [y+contraste.shape[0]*0.1 for y in par]
     MinRogne = min_parabole(z)
     # on doit compenser le rognagne de l'image
-    #mesure_hauteur(contraste, display=display)
+    # mesure_hauteur(contraste, display=display)
     MIN = MinRogne[1] + yRogne
 
     if display:

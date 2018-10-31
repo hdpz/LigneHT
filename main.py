@@ -33,9 +33,12 @@ if __name__ == '__main__':
         matricesGradient = computeModels(imagesGris[nom])
         for model in matricesGradient:
             print('Doing model ' + model)
+            if 'face' in nom:
+                limiteContraste = 0.08
+            else:
+                limiteContraste = 0.2
             hauteurFil = calculeHauteur(
-                matricesGradient[model], 0.08, display=False)
-
+                matricesGradient[model], limiteContraste, display=False)
             hauteurReelle = (centreY-hauteurFil) * \
                 echelle + Confs[nom]['hCercle']
             print(nom + ' et ' + model + ' a une hauteur reelle de', hauteurReelle)
